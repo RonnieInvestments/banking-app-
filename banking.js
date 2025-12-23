@@ -1,6 +1,6 @@
 // Account
 
-const account = [
+const accounts = [
     {name:"John Mbugu", pin: "2345", account_number: 34345, amount: 0},
     {name: "Samson Mwangi", pin: "9993", account_number: 12345, amount: 0},
 ];
@@ -27,9 +27,8 @@ function createAccount() {
     const pin = prompt ("Enter your pin");
     const account_number = prompt ("Enter account number");
 
-    for (let i = 0; i < array.length; i++) {
-        console.log("i is", i);
-        let singleAccount = account[i];
+    for (let i = 0; i < accounts.length; i++) {
+        let singleAccount = accounts[i];
         if (singleAccount.account_number == account_number) {
             alert (`Account number ${account_number} exists`);
             return;
@@ -42,6 +41,7 @@ function createAccount() {
         account_number: account_number, 
         amount: 0
     };
+    accounts.push(account);
 }
 
 /* 
@@ -101,10 +101,10 @@ function deposit() {
         alert ("Login please");
         return;
     }
-    console.log("before");
     console.log(atm);
 
     let amountToDeposit = prompt ("Enter amount to deposit");
+    let numberAmount = Number(amountToDeposit);
 
     // Check for negatives
     if (numberAmount<=0){
@@ -119,7 +119,6 @@ function deposit() {
     // Update the property
     atm.amount = newAmount;
 
-    console.log ("after");
     console.log(atm);
 }
 
@@ -130,10 +129,10 @@ function withdraw() {
         alert("Login please");
         return;
     }
-    console.log("before");
     console.log(atm);
 
     let amountToWithdraw = prompt ("Enter amount to withdraw");
+    let numberAmount = Number(amountToWithdraw);
     if (isNaN(amountToWithdraw)) {
         alert("Enter a valid number to withdraw");
         return;
@@ -151,13 +150,12 @@ function withdraw() {
         return;
     }
 
-    storeLastTransaction(amount, "withdraw", atm.amount);
+    storeLastTransaction(numberAmount, "withdraw", atm.amount);
     let newAmount = atm.amount - amountToWithdraw;
 
     atm.amount = newAmount;
     alert(`Withdrawal of amount ${amountToWithdraw} successful`);
 
-    console.log("after");
     console.log(atm);
 }
 
@@ -203,3 +201,17 @@ function showBalance() {
             Balance ${atm.amount}`)
     }
 }
+
+/*
+
+Test case:
+    -Account Name - Ronaldo Nyakwama
+    -PIN - 4361
+    -Account Number - 36737
+    -Initial Amount - 0
+    -Deposit - 5000
+    -Withdraw - 1000
+    -Check balance - should display 4000
+    -Logout
+
+*/
